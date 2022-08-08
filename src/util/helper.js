@@ -16,6 +16,6 @@ const getBatchInfo = function() {
     console.log('Plutonium, W4D1, the topic for today is Nodejs')
 }
 
-module.exports.getTodaysDate = printDate
+module.exports.printDate= printDate
 module.exports.getCurrentMonth = printMonth
 module.exports.printBatchDetails = getBatchInfo
