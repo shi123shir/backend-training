@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const express = require('express');
 const abc = require('../introduction/intro')
 const router = express.Router();
@@ -34,5 +35,84 @@ router.get('/student-details/:name', function(req, res){
     
     res.send('Dummy response')
 })
+ //assignment 
+ // assignment 1
+ 
+ router.get('/GET/movies', function(req,res){
+    let movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+    res.send(movies)
+ })
+// assignment 2 , 3
+ router.get('/GET/movies/:indexNumber',function(req,res){
+    let movieslist =['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+    let abc = req.params.indexNumber 
+    if ( abc > movieslist.length){
+        return res.send( "movie not found invalid number ")
+    }else{
+
+    console.log (movieslist[abc] )
+    res.send(movieslist[abc])
+     }
+ })
+
+   // assignment 4
+   router.get('/GET/films',function(req,res){
+  let objlist=
+    [ {
+        'id': 1,
+        'name': 'The Shining'
+       }, {
+        'id': 2,
+        'name': 'Incendies'
+       }, {
+        'id': 3,
+        'name': 'Rang de Basanti'
+       }, {
+        'id': 4,
+        'name': 'Finding Nemo'
+       }]
+     res.send (objlist)
+     console.log (objlist)   
+   })
+    //assignment 5 
+  router.get ('/GET/films/:filmId',function(req,res){
+  let objectId=
+  [ {
+    'id': 1,
+    'name': 'The Shining'
+   }, {
+    'id': 2,
+    'name': 'Incendies'
+   }, {
+    'id': 3,
+    'name': 'Rang de Basanti'
+   }, {
+    'id': 4,
+    'name': 'Finding Nemo'
+   }]
+   objectId.unshift(null)
+   let cdm = req.params.filmId    
+    if ( cdm >= objectId.length){
+        return res.send ("movie not found")
+    }
+    else{
+
+        res.send(objectId[cdm])
+
+    }
+   
+
+
+  })
+
+
+
+
+   
+
+
+ 
+
+
 
 module.exports = router;
