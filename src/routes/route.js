@@ -105,7 +105,7 @@ router.post('/players', function (req, res) {
     let ele = req.body
 
     for (i = 0; i < players.length; i++) {
-        if (players[i].name !== ele.name) {
+        if (players[i].name === ele.name) {
             
             return res.send("player already exist"  )
         }
@@ -115,7 +115,40 @@ router.post('/players', function (req, res) {
         
         
 })
+let person = [
+    { name : "Pk",
+      age : 10,
+      votingsatus :false
 
+    },
+    { name : "SK",
+    age : 20,
+    votingsatus :false
+
+  },
+  { name : "AA",
+  age : 70,
+  votingsatus :false
+
+},
+{ name : "SC",
+age : 40,
+votingsatus :false
+
+},
+{ name : "HO",
+age : 5,
+votingsatus :false
+
+},
+
+]
+router.post('/person',function(req,res){
+ let result = person.filter(x =>x.age > 18 )
+         result.map ( x => x.votingsatus = true)
+  res.send ( result)
+})
+module.exports = router;
 module.exports = router;
 
 
