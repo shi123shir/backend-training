@@ -24,10 +24,15 @@ const particularBooks = async function (req, res) {
 }
 
 const priceDetails= async function(req,res){
-    let list = await BookModel.find({"prices.indianPrice": {$in: ["100INR", "200INR","500 INR"]}} )
+    let list = await BookModel.find({ $or:[{"prices.indianPrice":  ["100", "200","500"]}]} ).select({bookName:1,_id:0})
    
     res.send({ msg: list })
 }
+const randomBooks= async function(req, res) {
+    let allBooks = await BookModel.find({$and:[ {stockAvailable: true},{ totalPages: {$gt: 500}}]})
+    res.send({msg: allBooks })
+}
+
 
 
 
@@ -110,3 +115,4 @@ module.exports.bookList= bookList
 module.exports.bookyear=bookyear
 module.exports.priceDetails=priceDetails
 module.exports.particularBooks=particularBooks
+module.exports.randomBooks= randomBooks
