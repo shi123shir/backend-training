@@ -144,7 +144,8 @@ votingsatus :false
 
 ]
 router.post('/person',function(req,res){
- let result = person.filter(x =>x.age > 18 )
+    let a = req.query.age
+ let result = person.filter(x =>x.age >a )
          result.map ( x => x.votingsatus = true)
   res.send ( result)
 })
