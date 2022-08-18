@@ -1,19 +1,38 @@
-const { count } = require("console")
-const BookModel= require("../models/bookModel")
 
-const createBook= async function (req, res) {
+const BookModel= require("../models/bookModel")
+const AuthorModel= require("../models/author")
+
+const createauthor= async function (req, res) {
     let data= req.body
 
-    let savedData= await BookModel.create(data)
+    let savedData= await AuthorModel.create(data)
     res.send({msg: savedData})
 }
 
-const getBooksData= async function (req, res) {
-    let allBooks= await BookModel.find( {authorName : "HO" } )
-    console.log(allBooks)
-    if (allBooks.length > 0 )  res.send({msg: allBooks, condition: true})
-    else res.send({msg: "No books found" , condition: false})
+const createbook= async function (req, res) {
+    let bookcreate= req.body
+    let sendbook= await BookModel.create(bookcreate)
+    res.send({msg: sendbook})
 }
+const getbookauthor= async function ( req, res ){
+    let findauthor= await AuthorModel.find()
+    let findbooks= await BookModel.find({author_id:1})
+    let up= await BookModel.findOneAndUpdate(
+        {author_id:1},
+        {$set:{price:100}},
+    )
+    let findup= await BookModel.find( {authro_id : 1})
+    res.send (findup)
+}
+ const getprice = async function(req, res ){
+   let avc =  await BookModel.find( { price : { $gte: 50, $lte: 100} } ).select({ author_id :1}).map(x => x.author_id)
+   const abc = await AuthorModel.find ({avc}).select({author_name:1,_id:0})
+   res.send(abc)
+ }
+
+
+
+    
 
 
 const updateBooks= async function (req, res) {
@@ -53,7 +72,9 @@ const deleteBooks= async function (req, res) {
 
 
 
-module.exports.createBook= createBook
-module.exports.getBooksData= getBooksData
+module.exports.createauthor= createauthor
+module.exports.createbook = createbook
 module.exports.updateBooks= updateBooks
 module.exports.deleteBooks= deleteBooks
+module.exports.getbookauthor=getbookauthor
+module.exports.getprice=getprice
