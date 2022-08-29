@@ -34,7 +34,7 @@ const loginUser = async function (req, res) {
   let token = jwt.sign(
     {
       userId: user._id.toString(),
-      batch: "thorium",
+      batch: "plutonium",
       organisation: "FunctionUp",
     },
     "functionup-plutonium-very-very-secret-key"
@@ -44,13 +44,10 @@ const loginUser = async function (req, res) {
 };
 
 const getUserData = async function (req, res) {
-  let token = req.headers["x-Auth-token"];
-  if (!token) token = req.headers["x-auth-token"];
-
-  //If no token is present in the request header return error. This means the user is not logged in.
-  if (!token) return res.send({ status: false, msg: "token must be present" });
-
+  let token = req.headers["x-auth-token"]
   console.log(token);
+    
+  //If no token is present in the request header return error. This means the user is not logged in
 
   // If a token is present then decode the token with verify function
   // verify takes two inputs:
@@ -89,10 +86,16 @@ const updateUser = async function (req, res) {
 
   let userData = req.body;
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
-  res.send({ status: updatedUser, data: updatedUser });
+  res.send({ status: true, data: updatedUser });
 };
+const Userdelete = async function (req ,res){
+  let userid = req.params.UserId;
+  let deleteUser = await userModel.findByIdAndUpdate({_id: userid},{$set:{isDeleted:true}},{new:true})
+  return res.send ( {data:deleteUser})
+}
 
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
+module.exports.Userdelete= Userdelete  
