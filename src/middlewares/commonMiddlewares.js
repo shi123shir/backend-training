@@ -1,14 +1,28 @@
 
 const middle =function (req,res,next){
     const abc = req.headers.isfreeappuser
-    console.log(abc)
     if(!abc){
         return res.send("request is missing a mandatory header")
     }
     next()
-}
+    }
+ 
+    const middle2= function (req,res,next){
+        let isFreeUser=req.headers.isfreeappuser
+        if(isFreeUser){
+            if(isFreeUser === 'true')
+            req.body.isFreeAppUser = true
+            if(isFreeUser === "false")
+            req.body.isFreeAppUser = false
+            next()
+        }
+        else { 
+            return res.send({msg: "isFreeAppUser is required"})
+        }
+    }
 
 module.exports.middle = middle
+module.exports.middle2 = middle2
 
 
 // const mid1= function ( req, res, next) {

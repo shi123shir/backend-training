@@ -17,8 +17,21 @@ const createorder= async function (req, res ){
     if(!productid){
         return res.send ({status:false, msg:"product is not in our database"})
     }
-    let abc= await OrderModel.create(data)
-    res.send({msg: abc})
-}
+     let freeAppUser = req.headers.isfreeappuser
+     if( freeAppUser == "false"){
+    if (userid.balance >= data.amount ){
+    let ordercreated = await OrderModel.create(data)
+    let upd = await userModel.updateOne({_id:userid},
+       {$inc:{balance: - data.amount}} )
+       return res.send ({msg:ordercreated})
+     }else if(userid.balance <= data.amount){
+        return res.send ({status:false, msg:"user doesn't have enough money to purchase this product " })
+     }
+     }else if (freeAppUser === "true"){
+            data["amount"]=0
+            const ord = await OrderModel.create(data)
+            return  res.send ({msg:ord})
+     }
 
+}
 module.exports.createorder = createorder

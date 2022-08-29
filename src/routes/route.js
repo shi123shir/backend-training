@@ -6,8 +6,8 @@ const ProductController= require("../controllers/productController")
 const orderController= require("../controllers/orderController")
 
 router.post("/product",ProductController.createProduct)
-router.post("/createUser",middleware.middle,UserController.createUser)
-router.post("/order",middleware.middle,orderController.createorder)
+router.post("/createUser",middleware.middle,middleware.middle2,UserController.createUser)
+router.post("/order",middleware.middle,middleware.middle2,orderController.createorder)
 
 
 

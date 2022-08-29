@@ -5,7 +5,9 @@ const userSchema= new mongoose.Schema({
 	balance:{type:Number,default:100}, 
 	address:String,
 	age: Number,
- 	gender:{enum:["male","female","other"]},
+ 	gender:{
+		type:String,
+		enum:["male","female","other"]},
 	isFreeAppUser:{type:Boolean,default:false} 
 },   {timestamps:true})
 
