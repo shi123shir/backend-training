@@ -9,7 +9,6 @@ let getStates = async function (req, res) {
             url: 'https://cdn-api.co-vin.in/api/v2/admin/location/states'
         }
         let result = await axios(options);
-        console.log(result)
         let data = result.data
         res.status(200).send({ msg: data, status: true })
     }
@@ -28,7 +27,6 @@ let getDistricts = async function (req, res) {
             url: `https://cdn-api.co-vin.in/api/v2/admin/location/districts/${id}`
         }
         let result = await axios(options);
-        console.log(result)
         let data = result.data
         res.status(200).send({ msg: data, status: true })
     }
@@ -69,7 +67,7 @@ let getOtp = async function (req, res) {
         }
 
         let result = await axios(options)
-        console.log(result.data)
+    
         res.status(200).send({ msg: result.data })
     }
     catch (err) {
@@ -77,9 +75,27 @@ let getOtp = async function (req, res) {
         res.status(500).send({ msg: err.message })
     }
 }
+let getByDistrict = async function (req, res){
+    try{
+ let DistrictId = req.query.districtid
+ let date = req.query.date
+ 
+  var option = {
+             method : "get",
+             url : `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${DistrictId}&date=${date}`
+  }
+    let result = await axios(option)
+     let alldone = result.data
+     res.status(200).send({data:alldone})
+} catch(err){
+    res.status(500).send ({msg:"server error", error:err})
+}
+
+}
 
 
 module.exports.getStates = getStates
 module.exports.getDistricts = getDistricts
 module.exports.getByPin = getByPin
 module.exports.getOtp = getOtp
+module.exports.getByDistricts =  getByDistrict
